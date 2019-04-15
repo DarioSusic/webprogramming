@@ -18,15 +18,15 @@
 	        <span aria-hidden="true">&times;</span>
 	      </button>
 	    </div>
-	    <form method="POST" action="rest/cars">
+	    <form method="POST" action="rest/cars" id="myform">
 	      <div class="modal-body">
 	        <div class="form-group">
 	          <label>Name</label>
-	          <input name="name" type="text" class="form-control">
+	          <input name="name" type="text" class="form-control" required>
 	        </div>
 	        <div class="form-group">
 	          <label>Year</label>
-	          <input name="year" type="number" class="form-control">
+	          <input name="year" type="number" class="form-control" required>
 	        </div>
 	        <div class="form-group">
 	          <label>Power</label>
@@ -123,4 +123,21 @@ function car2html(car){
         dataContainer.html(html);
     }
 })
+</script>
+
+<script>
+$("#myform").validate({
+  rules: {
+	  year: {
+	  minlength: 2,
+	  maxlength: 5
+	  }
+	},
+  messages: {
+	  year: {
+	  required: "Hamdija de,der majke ti unesi prezime",
+	  minlength: "Unesi der koje slovo",
+	  maxlength: "Precero si hamdija"
+	  }
+});
 </script>
