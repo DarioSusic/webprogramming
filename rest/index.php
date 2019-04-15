@@ -19,6 +19,13 @@ Flight::route('POST /cars', function(){
     $stmt->execute($request);
 });
 
+Flight::route('GET /users', function(){
+    $cars = Flight::db()->query('SELECT * FROM users', PDO::FETCH_ASSOC)->fetchAll();
+    Flight::json($cars);
+});
+
+
+
 
 Flight::start();
 ?>

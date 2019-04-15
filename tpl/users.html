@@ -1,0 +1,55 @@
+<div id="users_container" class="row">
+
+</div>
+
+<script type="text/javascript">
+$.get( "rest/users", function( data ) {
+  console.log(data);
+  $('#users_container').html('');
+  for(var i=0 ; i < data.length; i++){
+    $('#users_container').append(car2html(data[i]));
+  }
+});
+
+function user2html(user){
+  var car_html = $('#car_template').html();
+  car_html = car_html.replace('{{name}}', user.name);
+  car_html = car_html.replace('{{surname}}', user.surname);
+  car_html = car_html.replace('{{year}}', user.year);
+  car_html = car_html.replace('{{description}}', user.description);
+  return user_html;
+}
+</script>
+
+<script id="car_template" type="html/template">
+<div class="col-md-4" id="demo">
+    <div class="card card-user">
+        <div class="image">
+            <img src="https://ununsplash.imgix.net/photo-1431578500526-4d9613015464?fit=crop&fm=jpg&h=300&q=75&w=400" alt=""/>
+        </div>
+        <div class="content">
+            <div class="author">
+                <a href="#">
+                    <img class="avatar border-gray" src="assets/img/faces/face-3.jpg" alt=""/>
+                    <h4 class="title">
+                        {{name}}<br />
+                        <small>{{year}}</small>
+                    </h4>
+                </a>
+            </div>
+            <p class="description text-center">Power: {{power}}kw</p>
+            <p class="description text-center">Fuel: {{fuel}}</p>
+            <p class="description text-center">CCM: {{ccm}}</p>
+            <br>
+            <div class="col-auto text-center">
+            <a href="#" class="btn btn-warning btn-circle">
+                <i class="pe-7s-edit"></i>
+            </a>
+            <a href="#" class="btn btn-danger btn-circle">
+                <i class="pe-7s-trash"></i>
+            </a>
+        </div>
+        </div>
+    </div>
+</div>
+</script>
