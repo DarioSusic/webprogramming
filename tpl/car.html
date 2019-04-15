@@ -1,0 +1,126 @@
+<div class="d-sm-flex align-items-center justify-content-between mb-4">
+	<h1 class="text-gray-800">Cars</h1>
+	<button type="button" class="btn btn-primary pull-right" data-toggle="modal" data-target="#exampleModal">
+		<i class="pe-7s-plus text-white-50"></i> Add Car
+	</button>
+</div>
+
+<div id="cars_container" class="row">
+
+</div>
+
+<div class="modal" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+	<div class="modal-dialog" role="document">
+	  <div class="modal-content">
+	    <div class="modal-header">
+	      <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+	      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+	        <span aria-hidden="true">&times;</span>
+	      </button>
+	    </div>
+	    <form method="POST" action="rest/cars">
+	      <div class="modal-body">
+	        <div class="form-group">
+	          <label>Name</label>
+	          <input name="name" type="text" class="form-control">
+	        </div>
+	        <div class="form-group">
+	          <label>Year</label>
+	          <input name="year" type="number" class="form-control">
+	        </div>
+	        <div class="form-group">
+	          <label>Power</label>
+	          <input name="power" type="number" class="form-control">
+	        </div>
+	        <div class="form-group">
+	          <label>Fuel</label>
+	          <input name="fuel" type="text" class="form-control">
+	        </div>
+	        <div class="form-group">
+	          <label>CCM</label>
+	          <input name="ccm" type="number" class="form-control">
+	        </div>
+	      </div>
+	      <div class="modal-footer">
+	        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+	        <button type="submit" class="btn btn-primary">Save changes</button>
+	      </div>
+	    </form>
+	  </div>
+	</div>
+</div>
+
+<script type="text/javascript">
+$.get( "rest/cars", function( data ) {
+  console.log(data);
+  $('#cars_container').html('');
+  for(var i=0 ; i < data.length; i++){
+    $('#cars_container').append(car2html(data[i]));
+  }
+});
+
+function car2html(car){
+  var car_html = $('#car_template').html();
+  car_html = car_html.replace('{{name}}', car.name);
+  car_html = car_html.replace('{{year}}', car.year);
+  car_html = car_html.replace('{{power}}', car.power);
+  car_html = car_html.replace('{{fuel}}', car.fuel);
+  car_html = car_html.replace('{{ccm}}', car.ccm);
+  return car_html;
+}
+</script>
+
+<script id="car_template" type="html/template">
+<div class="col-md-4" id="demo">
+    <div class="card card-user">
+        <div class="image">
+            <img src="https://ununsplash.imgix.net/photo-1431578500526-4d9613015464?fit=crop&fm=jpg&h=300&q=75&w=400" alt=""/>
+        </div>
+        <div class="content">
+            <div class="author">
+				<a href="#">
+                	<img class="avatar border-gray" src="assets/img/faces/face-3.jpg" alt=""/>
+                  	<h4 class="title">
+                  		{{name}}<br />
+                  		<small>{{year}}</small>
+                  	</h4>
+				</a>
+            </div>
+            <p class="description text-center">Power: {{power}}kw</p>
+            <p class="description text-center">Fuel: {{fuel}}</p>
+            <p class="description text-center">CCM: {{ccm}}</p>
+            <br>
+            <div class="col-auto text-center">
+			<a href="#" class="btn btn-warning btn-circle">
+				<i class="pe-7s-edit"></i>
+            </a>
+            <a href="#" class="btn btn-danger btn-circle">
+				<i class="pe-7s-trash"></i>
+            </a>
+		</div>
+        </div>
+    </div>
+</div>
+</script>
+
+<script type="text/javascript">$('#exampleModal').appendTo("body") </script>
+
+<script type="text/javascript">
+	$('#cars_container').pagination({
+    dataSource: function(data){
+	    var result = [];
+	    for (var i = 0; i < data.length; i++) {
+	        result.push(i);
+	    }
+	    data(result);
+	 }
+    pageSize: 5,
+    autoHidePrevious: true,
+    autoHideNext: true,
+    callback: function(data, pagination) {
+        // template method of yourself
+        var html = template(car);
+        dataContainer.html(html);
+    }
+})
+</script>
